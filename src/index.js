@@ -32,47 +32,42 @@ class CatClickerApp extends React.Component{
             ],
             currentCat: 0
         }
-        this.changeCurrentCat = this.changeCurrentCat.bind(this);
-        this.increment = this.increment.bind(this);
-        this.save = this.save.bind(this);
     }
 
-    increment(){
-        const {cats: catsArray, currentCat} = this.state;
+    increment = () => {
+        const {cats, currentCat} = this.state;
 
-        (catsArray[currentCat]).count++;
+        (cats[currentCat]).count++;
+            this.setState({
+                cats
+            });
+    }
+
+    changeCurrentCat = currentCat => {
         this.setState({
-            cats: catsArray
+            currentCat
         });
     }
 
-    changeCurrentCat(i){
+    save = (name,count) => {
+        const {cats, currentCat} = this.state;
+        count === "" && (count = 0);
+        (cats[currentCat]).count = count;
+        (cats[currentCat]).name = name;
         this.setState({
-            currentCat: i
-        });
-    }
-
-    save(name,count){
-        const {cats : catsArray, currentCat} = this.state;
-        if(count===""){
-            count=0;
-        }
-        (catsArray[currentCat]).count = count;
-        (catsArray[currentCat]).name = name;
-        this.setState({
-            cats: catsArray
+            cats
         });
     }
 
     render(){
-        const {changeCurrentCat, increment, save, state : {cats, currentCat}} = this;
+        const {cats, currentCat} = this.state;
         return (
             <div className="cat-clicker">
                 <div className="cat-clicker__header">Cat Clicker</div>
                 <div className="cat-clicker__body">
-                <CatList currentCat = {currentCat} cats={cats} changeCurrentCat = {changeCurrentCat} />
-                <DisplayCat cat = {cats[currentCat]} incrementCount = {increment}/>
-                <AdminPanel cat = {cats[currentCat]} save={save}/>
+                <CatList currentCat = {currentCat} cats={cats} changeCurrentCat = {this.changeCurrentCat} />
+                <DisplayCat cat = {cats[currentCat]} incrementCount = {this.increment}/>
+                <AdminPanel cat = {cats[currentCat]} save={this.save}/>
                 </div>
             </div>
         );

@@ -1,13 +1,9 @@
 import React from 'react';
 
+/*
 class CatList extends React.Component{
 
-    constructor(props){
-        super(props);
-        this.changeCurrentCat = this.changeCurrentCat.bind(this);
-    }
-
-    changeCurrentCat(e){
+    changeCurrentCat = e => {
         this.props.changeCurrentCat(e.target.id);
     }
 
@@ -19,6 +15,20 @@ class CatList extends React.Component{
             <ul className="col-xs-4 list-group"> {catList} </ul>
     );
     }
+}*/
+
+function CatList(props){
+    const changeCurrentCat = e => {
+        props.changeCurrentCat(e.target.id);
+    }
+
+    const catList = (props.cats).map((cat, index) => {
+            return (<li className ="list-group-item" key={index} id={index} onClick={changeCurrentCat}> {cat.name} </li>);
+    });
+
+    return (
+        <ul className="col-xs-4 list-group"> {catList} </ul>
+    );
 }
 
 export default CatList;

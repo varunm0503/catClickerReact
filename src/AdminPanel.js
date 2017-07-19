@@ -9,27 +9,23 @@ class AdminPanel extends React.Component{
             name : props.cat.name,
             count : props.cat.count
         }
-        this.toggleState = this.toggleState.bind(this);
-        this.changeName = this.changeName.bind(this);
-        this.changeCount = this.changeCount.bind(this);
-        this.changeCatDetails = this.changeCatDetails.bind(this);
     }
 
-    toggleState(){
+    toggleState = () => {
         //ask
         this.setState((prevState) => ({showPanel : !prevState.showPanel}));
 
     }
 
-    changeName(e){
-        console.log(e.target);
+    changeName = e => {
+        //console.log(e.target);
         this.setState({
             name : e.target.value
         });
     }
 
-    changeCount(e){
-        console.log(e.target.value);
+    changeCount = e => {
+        //console.log(e.target.value);
         if(e.target.value < 0 || isNaN(e.target.value)){
             this.setState((prevState)=>({
                 count:prevState.count
@@ -39,33 +35,34 @@ class AdminPanel extends React.Component{
                 count: e.target.value
             });
         }
-        console.log(e.target);
+        //console.log(e.target);
     }
 
-    changeCatDetails(){
+    changeCatDetails = () => {
         this.props.save(this.state.name,this.state.count);
         //callback
     }
 
     componentWillReceiveProps(newProps){
+        const {name, count} = newProps.cat;
         this.setState({
-            name: newProps.cat.name,
-            count: newProps.cat.count
+            name,
+            count
         })
     }
 
     render(){
-        const {toggleState, changeCatDetails, changeName, changeCount, state : {name, count, showPanel}} = this;
+        const {name, count, showPanel} = this.state;
         if (showPanel === false){
-            return <div className="col-xs-4"><button className="btn btn-primary" onClick = {toggleState}> Show Admin </button></div>
+            return <div className="col-xs-4"><button className="btn btn-primary" onClick = {this.toggleState}> Show Admin </button></div>
         }
         return (
             <div className="col-xs-4">
-            <button className="btn btn-primary" onClick = {toggleState}> Hide Admin </button>
+            <button className="btn btn-primary" onClick = {this.toggleState}> Hide Admin </button>
         <div >
-            <div> Change Name: <input type="text" value={name} onChange={changeName}/></div>
-            <div>  Change Count: <input type="text" value={count} onChange={changeCount}/></div>
-            <button className="btn btn-primary" onClick={changeCatDetails}> Save </button>
+            <div> Change Name: <input type="text" value={name} onChange={this.changeName}/></div>
+            <div>  Change Count: <input type="text" value={count} onChange={this.changeCount}/></div>
+            <button className="btn btn-primary" onClick={this.changeCatDetails}> Save </button>
             </div>
             </div>
     );
