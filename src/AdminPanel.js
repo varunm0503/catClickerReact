@@ -9,23 +9,21 @@ class AdminPanel extends React.Component{
             name : props.cat.name,
             count : props.cat.count
         }
+
     }
 
     toggleState = () => {
-        //ask
         this.setState((prevState) => ({showPanel : !prevState.showPanel}));
 
     }
 
     changeName = e => {
-        //console.log(e.target);
         this.setState({
             name : e.target.value
         });
     }
 
     changeCount = e => {
-        //console.log(e.target.value);
         if(e.target.value < 0 || isNaN(e.target.value)){
             this.setState((prevState)=>({
                 count:prevState.count
@@ -35,12 +33,10 @@ class AdminPanel extends React.Component{
                 count: e.target.value
             });
         }
-        //console.log(e.target);
     }
 
     changeCatDetails = () => {
         this.props.save(this.state.name,this.state.count);
-        //callback
     }
 
     componentWillReceiveProps(newProps){

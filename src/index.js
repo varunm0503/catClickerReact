@@ -36,11 +36,10 @@ class CatClickerApp extends React.Component{
 
     increment = () => {
         const {cats, currentCat} = this.state;
-
-        (cats[currentCat]).count++;
-            this.setState({
-                cats
-            });
+        const oldCat = cats[currentCat];
+        const nextCat= Object.assign({},oldCat, {count:oldCat.count+1});
+        const newState= {cats: [...cats.slice(0,currentCat),nextCat,...cats.slice(currentCat+1)]};
+        this.setState(newState);
     }
 
     changeCurrentCat = currentCat => {
@@ -52,11 +51,11 @@ class CatClickerApp extends React.Component{
     save = (name,count) => {
         const {cats, currentCat} = this.state;
         count === "" && (count = 0);
-        (cats[currentCat]).count = count;
-        (cats[currentCat]).name = name;
-        this.setState({
-            cats
-        });
+        count = parseInt(count);
+        const oldCat = cats[currentCat];
+        const nextCat= Object.assign({},oldCat, {name,count});
+        const newState= {cats: [...cats.slice(0,currentCat),nextCat,...cats.slice(currentCat+1)]};
+        this.setState(newState);
     }
 
     render(){

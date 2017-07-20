@@ -19,11 +19,11 @@ class CatList extends React.Component{
 
 function CatList(props){
     const changeCurrentCat = e => {
-        props.changeCurrentCat(e.target.id);
+        props.changeCurrentCat(parseInt(e.target.getAttribute('data-id')));
     }
 
     const catList = (props.cats).map((cat, index) => {
-            return (<li className ="list-group-item" key={index} id={index} onClick={changeCurrentCat}> {cat.name} </li>);
+            return (<li className ="list-group-item" data-id = {index} key={index} onClick={changeCurrentCat}> {cat.name} </li>);
     });
 
     return (
